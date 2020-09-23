@@ -25,22 +25,21 @@ class MessageListView(ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (permissions.AllowAny, )
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
+  
+    
 
 class MessageDetailView(RetrieveAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (permissions.AllowAny, )
 
-
 class MessageCreateView(CreateAPIView):
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    # permission_classes = (permissions.IsAuthenticated, )
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.AllowAny, )
 
 
 class MessageUpdateView(UpdateAPIView):
