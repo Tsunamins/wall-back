@@ -39,7 +39,7 @@ class MessageDetailView(RetrieveAPIView):
 class MessageCreateView(CreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    #permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.IsAuthenticated, )
     permission_classes = (permissions.AllowAny, )
 
 
