@@ -10,6 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'messages']
 
 class MessageSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Message
-        fields = ('content', 'created_at', 'updated_at')
+        fields = ('content', 'user', 'created_at', 'updated_at')
