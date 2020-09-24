@@ -40,7 +40,21 @@ class ViewTestCase(TestCase):
         """Test if api has message creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
 
-    
+    def test_api_can_get_a_message(self):
+        """Test if api can get a given message."""
+        message = Message.objects.get()
+        response = self.client.get('/wall-api/messages/{}/'.format(message.id), format="json")
+        serializer = MessageSerializer(message)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
+
+    def test_api_can_update_message(self):
+        """Test if api can update a given message."""
+        message = Message.objects.get()
+        change_message = {'content': 'Test updating an article in this message'}
+        res = self.client.put('/wall-api/messages/{}/update/'.format(message.id), change_message, format="json")
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
 
 class GetAllMessagesTest(TestCase):
     """ Test module for GET all puppies API """
@@ -54,11 +68,9 @@ class GetAllMessagesTest(TestCase):
         Message.objects.create(
             content='Another creative test message', user=user)
      
-
     def test_get_all_messages(self):
         response = self.client.get('/wall-api/messages/', format="json")
         messages = Message.objects.all()
         serializer = MessageSerializer(messages, many=True)
-
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
