@@ -55,6 +55,12 @@ class ViewTestCase(TestCase):
         res = self.client.put('/wall-api/messages/{}/update/'.format(message.id), change_message, format="json")
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
+    def test_api_can_delete_message(self):
+        """Test the api can delete a message."""
+        message = Message.objects.get()
+        response = self.client.delete('/wall-api/messages/{}/delete/'.format(message.id), format="json", follow=True)
+        self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
+
 
 class GetAllMessagesTest(TestCase):
     """ Test module for GET all puppies API """
