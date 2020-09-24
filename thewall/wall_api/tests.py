@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import Message, User
+from .serializers import MessageSerializer
 
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -38,3 +39,26 @@ class ViewTestCase(TestCase):
     def test_api_can_create_a_message(self):
         """Test if api has message creation capability."""
         self.assertEqual(self.response.status_code, status.HTTP_201_CREATED)
+
+    
+
+class GetAllMessagesTest(TestCase):
+    """ Test module for GET all puppies API """
+
+    def setUp(self):
+        user = User.objects.create(username='apitestuser')
+        Message.objects.create(
+            content='Message for get all messages tests', user=user)
+        Message.objects.create(
+            content='Another message for the tests', user=user)
+        Message.objects.create(
+            content='Another creative test message', user=user)
+     
+
+    def test_get_all_messages(self):
+        response = self.client.get('/wall-api/messages/', format="json")
+        messages = Message.objects.all()
+        serializer = MessageSerializer(messages, many=True)
+
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
