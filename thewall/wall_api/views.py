@@ -9,9 +9,18 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView
 )
 
+from django.core.mail import send_mail
+
 from .serializers import UserSerializer, MessageSerializer
 from django.contrib.auth.models import User
 from .models import Message
+
+class UserCreate(CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    # will have to wait for registration to add, so can incorporate into
+    # send_mail('Welcome to the Wall', 'Login and write your first message on the wall', 'reillyamr@gmail.com', ['reillyamr@gmail.com'], fail_silently=False)
+
 
 class UserList(ListAPIView):
     queryset = User.objects.all()
