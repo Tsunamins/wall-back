@@ -33,12 +33,12 @@ class MessageCreateView(CreateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (permissions.IsAuthenticated, )
-    # permission_classes = (permissions.AllowAny, )
+  
 
 class MessageRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.IsAuthenticated, )
 
 # class MessageDetailView(RetrieveAPIView):
 #     queryset = Message.objects.all()
