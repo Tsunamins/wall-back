@@ -5,7 +5,8 @@ from rest_framework.generics import (
     RetrieveAPIView,
     CreateAPIView,
     DestroyAPIView,
-    UpdateAPIView
+    UpdateAPIView,
+    RetrieveUpdateDestroyAPIView
 )
 
 from .serializers import UserSerializer, MessageSerializer
@@ -26,13 +27,6 @@ class MessageListView(ListAPIView):
     serializer_class = MessageSerializer
     permission_classes = (permissions.AllowAny, )
   
-    
-
-class MessageDetailView(RetrieveAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-    permission_classes = (permissions.AllowAny, )
-
 class MessageCreateView(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -41,18 +35,28 @@ class MessageCreateView(CreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     # permission_classes = (permissions.AllowAny, )
 
-
-class MessageUpdateView(UpdateAPIView):
+class MessageRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    #permission_classes = (permissions.IsAuthenticated, )
     permission_classes = (permissions.AllowAny, )
 
+# class MessageDetailView(RetrieveAPIView):
+#     queryset = Message.objects.all()
+#     serializer_class = MessageSerializer
+#     permission_classes = (permissions.AllowAny, )    
 
-class MessageDeleteView(DestroyAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-    #permission_classes = (permissions.IsAuthenticated, )
-    permission_classes = (permissions.AllowAny, )
+
+# class MessageUpdateView(UpdateAPIView):
+#     queryset = Message.objects.all()
+#     serializer_class = MessageSerializer
+#     permission_classes = (permissions.IsAuthenticated, )
+#     # permission_classes = (permissions.AllowAny, )
+
+
+# class MessageDeleteView(DestroyAPIView):
+#     queryset = Message.objects.all()
+#     serializer_class = MessageSerializer
+#     #permission_classes = (permissions.IsAuthenticated, )
+#     permission_classes = (permissions.AllowAny, )
 
 
