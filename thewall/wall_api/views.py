@@ -9,7 +9,9 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView
 )
 
-from django.core.mail import send_mail
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .serializers import UserSerializer, MessageSerializer
 from django.contrib.auth.models import User
@@ -18,8 +20,6 @@ from .models import Message
 class UserCreate(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # will have to wait for registration to add, so can incorporate into
-    # send_mail('Welcome to the Wall', 'Login and write your first message on the wall', 'reillyamr@gmail.com', ['reillyamr@gmail.com'], fail_silently=False)
 
 
 class UserList(ListAPIView):
@@ -48,6 +48,16 @@ class MessageRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (permissions.IsAuthenticated, )
+
+
+@api_view()
+def null_view(request):
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view()
+def complete_view(request):
+    return Response("Email account is activated")
 
 # class MessageDetailView(RetrieveAPIView):
 #     queryset = Message.objects.all()
