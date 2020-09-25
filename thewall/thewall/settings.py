@@ -1,5 +1,7 @@
 import os
 
+from django.urls import reverse_lazy
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -62,10 +64,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'thewall.urls'
 
+TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_ROOT],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,8 +133,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-EMAIL_HOST = 'smtp.sendgrid.net'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy('account_confirm_complete')
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('account_confirm_complete')
+
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST_USER = 'reillyamr@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('SENDINBLUE')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_API_KEY')
+DEFAULT_FROM_EMAIL = "reillyamr@gmail.com"
