@@ -1,4 +1,0 @@
-{% load i18n %}
-{% autoescape off %}
-{% blocktrans %}Welcome to the Wall, please confirm your email.{% endblocktrans %}
-{% endautoescape %}
