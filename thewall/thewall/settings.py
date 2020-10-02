@@ -145,6 +145,9 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy('account_confirm_complete')
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('account_confirm_complete')
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_HOST_USER = 'reillyamr@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('SENDINBLUE')
