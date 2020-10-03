@@ -49,16 +49,6 @@ class MessageRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     serializer_class = MessageSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
-
-@api_view()
-def null_view(request):
-    return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view()
-def complete_view(request):
-    return Response("Email account is activated")
-
 # class MessageDetailView(RetrieveAPIView):
 #     queryset = Message.objects.all()
 #     serializer_class = MessageSerializer
