@@ -9,11 +9,13 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView
 )
 
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .serializers import UserSerializer, MessageSerializer
 from django.contrib.auth.models import User
 from .models import Message
+from django.contrib.auth.mixins import LoginRequiredMixin
+from wall_api.permissions import UserLoggedInandMatch
+import code
 
 class UserCreate(CreateAPIView):
     queryset = User.objects.all()
@@ -51,14 +53,13 @@ class MessageDetailView(RetrieveAPIView):
 class MessageUpdateView(UpdateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, UserLoggedInandMatch)
  
-
 
 class MessageDeleteView(DestroyAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, UserLoggedInandMatch)
   
 
 
