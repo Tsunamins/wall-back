@@ -52,8 +52,8 @@ class ViewTestCase(TestCase):
         """Test if api can update a given message."""
         message = Message.objects.get()
         change_message = {'content': 'Test updating an article in this message'}
-        res = self.client.put('/wall-api/messages/{}/update/'.format(message.id), change_message, format="json")
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        response = self.client.put('/wall-api/messages/{}/update/'.format(message.id), change_message, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_api_can_delete_message(self):
         """Test the api can delete a message."""
@@ -78,6 +78,7 @@ class GetAllMessagesTest(TestCase):
         response = self.client.get('/wall-api/messages/', format="json")
         messages = Message.objects.all()
         serializer = MessageSerializer(messages, many=True)
+        print(response.data)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -85,16 +86,12 @@ class GetAllMessagesTest(TestCase):
 
 class UnauthedCreateViewTestCase(TestCase):
     """Test suite user cannot create if not logged in."""
-
     def setUp(self):
-        """Define the test client and other test variables."""
         user = User.objects.create(username='apitestuser')
         self.client = APIClient()
-
-        self.message_data = {'content': 'New message from tests', 'user': user.id}
-        self.response = self.client.post('/wall-api/messages/create/', self.message_data, format='json')
-      
+        self.message_data = {'content': 'New legit message from tests', 'user': user.id}
+        self.response = self.client.post('/wall-api/messages/create/', self.message_data, format='json')      
 
     def test_api_cannot_create_a_message(self):
-        """Test if unauthed will not allow message creation."""
+        """Test if unauthed will not allow new message creation."""
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
