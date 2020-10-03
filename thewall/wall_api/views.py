@@ -9,9 +9,7 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView
 )
 
-from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .serializers import UserSerializer, MessageSerializer
 from django.contrib.auth.models import User
@@ -44,28 +42,23 @@ class MessageCreateView(CreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
   
 
-class MessageRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+class MessageDetailView(RetrieveAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = (permissions.AllowAny, )    
+
+
+class MessageUpdateView(UpdateAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (permissions.IsAuthenticated, )
-
-# class MessageDetailView(RetrieveAPIView):
-#     queryset = Message.objects.all()
-#     serializer_class = MessageSerializer
-#     permission_classes = (permissions.AllowAny, )    
+ 
 
 
-# class MessageUpdateView(UpdateAPIView):
-#     queryset = Message.objects.all()
-#     serializer_class = MessageSerializer
-#     permission_classes = (permissions.IsAuthenticated, )
-#     # permission_classes = (permissions.AllowAny, )
-
-
-# class MessageDeleteView(DestroyAPIView):
-#     queryset = Message.objects.all()
-#     serializer_class = MessageSerializer
-#     #permission_classes = (permissions.IsAuthenticated, )
-#     permission_classes = (permissions.AllowAny, )
+class MessageDeleteView(DestroyAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+  
 
 
