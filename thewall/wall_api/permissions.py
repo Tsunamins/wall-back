@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from django.contrib.auth.models import User
 
-class IsUpdateProfile(permissions.BasePermission):
+class UserLoggedInandMatch(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         # can write custom code
