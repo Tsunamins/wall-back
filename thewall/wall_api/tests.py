@@ -63,7 +63,7 @@ class ViewTestCase(TestCase):
 
 
 class GetAllMessagesTest(TestCase):
-    """ Test module for GET all puppies API """
+    """ Test module for GET all the wall API """
 
     def setUp(self):
         user = User.objects.create(username='apitestuser')
@@ -81,3 +81,20 @@ class GetAllMessagesTest(TestCase):
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+
+
+class UnauthedCreateViewTestCase(TestCase):
+    """Test suite user cannot create if not logged in."""
+
+    def setUp(self):
+        """Define the test client and other test variables."""
+        user = User.objects.create(username='apitestuser')
+        self.client = APIClient()
+
+        self.message_data = {'content': 'New message from tests', 'user': user.id}
+        self.response = self.client.post('/wall-api/messages/create/', self.message_data, format='json')
+      
+
+    def test_api_cannot_create_a_message(self):
+        """Test if unauthed will not allow message creation."""
+        self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
