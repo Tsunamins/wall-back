@@ -12,7 +12,6 @@ def welcome_user(sender, instance, **kwargs):
         subject = 'Welcome to the Wall'
         message = 'Welcome to the Wall ' + new_username + ', \n' + 'Log in with the link below to start the Writing on the Wall. \n' + url
         send_mail(subject, message, from_email=None, recipient_list=[new_user_email], fail_silently=False, html_message=None)
-        print(new_user_email + " from welcome user function")
 
 
 post_save.connect(welcome_user, sender=User)
