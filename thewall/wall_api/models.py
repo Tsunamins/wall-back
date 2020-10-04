@@ -18,7 +18,7 @@ post_save.connect(welcome_user, sender=User)
 
 
 class Message(models.Model):
-    content = models.CharField(max_length=250, min_length=1)
+    content = models.CharField(max_length=250)
     user = models.ForeignKey('auth.User', related_name='messages', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
