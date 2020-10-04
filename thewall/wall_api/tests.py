@@ -89,9 +89,36 @@ class UnauthedCreateViewTestCase(TestCase):
     def setUp(self):
         user = User.objects.create(username='apitestuser')
         self.client = APIClient()
-        self.message_data = {'content': 'New legit message from tests', 'user': user.id}
-        self.response = self.client.post('/wall-api/messages/create/', self.message_data, format='json')      
+        self.message_data = {'content': 'Non-legit message from tests', 'user': user.id}
+        self.response = self.client.post('/wall-api/messages/create/', self.message_data, format='json')   
 
     def test_api_cannot_create_a_message(self):
         """Test if unauthed will not allow new message creation."""
         self.assertEqual(self.response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+
+class UnauthedUpdateDeleteViewTestCase(TestCase):
+    """Test suite user cannot update/delete if not logged in."""
+    def setUp(self):
+        """Define the test client and other test variables."""
+        user = User.objects.create(username='apitestuser')
+        self.client = APIClient()
+        self.client.force_authenticate(user=user)
+        self.message_data = {'content': 'New message from tests', 'user': user.id}
+        self.response = self.client.post('/wall-api/messages/create/', self.message_data, format='json')
+
+    def test_api_cannot_update_message(self):
+        """Test if api cannot update a given message."""
+        self.client.force_authenticate(user=None)
+        message = Message.objects.get()
+        change_message = {'content': 'Test updating an article in this message'}
+        response = self.client.put('/wall-api/messages/{}/update/'.format(message.id), change_message, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_api_cannot_delete_message(self):
+        """Test the api cannot delete a message."""
+        self.client.force_authenticate(user=None)
+        message = Message.objects.get()
+        response = self.client.delete('/wall-api/messages/{}/delete/'.format(message.id), format="json", follow=True)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
