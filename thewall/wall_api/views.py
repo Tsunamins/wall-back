@@ -1,26 +1,26 @@
 from django.shortcuts import render
 from rest_framework import permissions
+from rest_framework.response import Response
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
     CreateAPIView,
     DestroyAPIView,
     UpdateAPIView,
-    RetrieveUpdateDestroyAPIView
+    GenericAPIView
 )
 
 
 from .serializers import UserSerializer, MessageSerializer
 from django.contrib.auth.models import User
 from .models import Message
-from django.contrib.auth.mixins import LoginRequiredMixin
 from wall_api.permissions import UserLoggedInandMatch
-import code
 
-class UserCreate(CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
+class CurrentUserView(RetrieveAPIView):
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
 
 class UserList(ListAPIView):
     queryset = User.objects.all()
