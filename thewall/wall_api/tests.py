@@ -98,8 +98,8 @@ class UnauthedCreateViewTestCase(TestCase):
 
 
 
-class UnauthedUpdateDeleteViewTestCase(TestCase):
-    """Test suite user cannot update/delete if not logged in."""
+class UnauthenticatedUpdateDeleteViewTestCase(TestCase):
+    """Test suite user cannot update/delete if not logged in/authenticated."""
     def setUp(self):
         """Define the test client and other test variables."""
         user = User.objects.create(username='apitestuser')
@@ -124,8 +124,8 @@ class UnauthedUpdateDeleteViewTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-class UnauthedUserUpdateDeleteViewTestCase(TestCase):
-    """Test suite logged in user cannot update/delete if not their message."""
+class UnauthorizedUpdateDeleteViewTestCase(TestCase):
+    """Test suite logged in user cannot update/delete if not authorized/not their message"""
     def setUp(self):
         """Define the test client and other test variables."""
         user = User.objects.create(username='apitestuser')
