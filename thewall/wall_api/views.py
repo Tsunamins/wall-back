@@ -18,9 +18,13 @@ from wall_api.permissions import UserLoggedInandMatch
 
 
 class CurrentUserView(RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticated, UserLoggedInandMatch)
+
     def get(self, request):
-        serializer = UserSerializer(request.user)
+        serializer = UserSerializer(self.request.user)
         return Response(serializer.data)
+
+
 
 class UserList(ListAPIView):
     queryset = User.objects.all()
