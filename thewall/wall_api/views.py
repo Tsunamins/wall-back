@@ -36,9 +36,10 @@ class UserDetail(RetrieveAPIView):
     serializer_class = UserSerializer
 
 class MessageListView(ListAPIView):
-    queryset = Message.objects.all()
+    queryset = Message.objects.all().order_by('-created_at')
     serializer_class = MessageSerializer
     permission_classes = (permissions.AllowAny, )
+
   
 class MessageCreateView(CreateAPIView):
     def perform_create(self, serializer):
