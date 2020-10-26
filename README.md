@@ -17,8 +17,7 @@ from the root directory:
 ##### Start server
 cd into /thewall directory: 
 `python manage.py runserver`
-
-
+(may need python3)
 
 
 When switching computers ran into a few missing installations:
