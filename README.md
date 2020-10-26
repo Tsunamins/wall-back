@@ -3,7 +3,7 @@ Python/Django app, virtual environment created with: <br/>
 `python3 -m venv env`
 
 ##### Start virtual environment
-from the root directory: 
+from the root directory: <br/>
 `source env/bin/activate`
 
 ##### Once in virtual is started, packages may need to be installed: 
@@ -26,7 +26,7 @@ sudo apt-get install python3-venv (was a Debian/Ubuntu error)<br/>
 sudo apt-get install python3-django <br/>
 
 
-In case some issues come up with environment these were my original local environment settings:<br/>
+In case some issues come up with environment these were my original local environment and package settings:<br/>
 System: Ubuntu 20.04<br/>
 Python: command not available<br/>
 Python3: Python 3.8.5<br/>
