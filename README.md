@@ -6,7 +6,7 @@ Python/Django app, virtual environment created with: <br/>
 from the root directory: <br/>
 `source env/bin/activate`
 
-##### Once in virtual is started, packages may need to be installed: 
+##### Once virtual is started, packages may need to be installed: 
 `pip install django`<br/>
 `pip install djangorestframework`<br/>
 `pip install python-dotenv`<br/>
