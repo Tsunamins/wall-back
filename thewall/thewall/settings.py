@@ -2,8 +2,8 @@ import os
 
 from django.urls import reverse_lazy
 
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 from pathlib import Path
 
@@ -163,7 +163,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_HOST_USER = 'reillyamr@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('SENDINBLUE')
+# EMAIL_HOST_PASSWORD = os.environ.get('SENDINBLUE')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "reillyamr@gmail.com"
